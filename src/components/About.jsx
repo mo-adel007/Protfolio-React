@@ -49,13 +49,13 @@ const About = () => {
         className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
       >
         {" "}
-        A software developer experienced in the full product development
-        lifecycle, proficient in React.js for front-end development, skilled in
-        Node.js for the back-end programming, I excel in crafting clean code,
-        optimizing for mobile, and driving system performance, fostering the
-        innovation in the field of ICT, strive to integrate emerging
-        technologies into the classroom, providing students with cutting-edge
-        learning experience
+        Dynamic and dedicated MERN Full Stack Developer and Programming
+        Instructor with comprehensive experience in developing, deploying, and
+        maintaining web applications, Implementing modern, responsive UIs. Adept
+        at integrating and teaching web technologies, committed on delivering
+        high-quality and educating future developers by incorporating hands-on
+        task-driven learning. Passionate about empowering students and preparing
+        them for the professional tech market with practical coding skills.
       </motion.p>
       <div className="mt-20 flex flex-wrap gap-10">
         {services.map((service, index) => (

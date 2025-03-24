@@ -8,6 +8,7 @@ import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
 import "react-vertical-timeline-component/style.min.css";
+import { StarsCanvas } from "./canvas";
 
 const ExperienceCard = ({ experience }) => {
   return (

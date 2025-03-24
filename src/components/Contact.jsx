@@ -2,7 +2,7 @@ import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
 import { styles } from "../styles";
-import { EarthCanvas } from "./canvas";
+import { EarthCanvas, StarsCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 
@@ -56,6 +56,8 @@ const Contact = () => {
   };
   return (
     <div className="xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden">
+      <StarsCanvas />
+
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
         className="flex-[0.75px] bg-black-100 p-8 rounded-2xl"
@@ -74,7 +76,7 @@ const Contact = () => {
               name="name"
               value={form.name}
               onChange={handleChange}
-              placeholder="What's your good name?"
+              placeholder="Enter your name here.."
               className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
             />
           </label>
@@ -85,7 +87,7 @@ const Contact = () => {
               name="email"
               value={form.email}
               onChange={handleChange}
-              placeholder="What's your web address?"
+              placeholder="Enter your email address.."
               className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
             />
           </label>
@@ -96,7 +98,7 @@ const Contact = () => {
               name="message"
               value={form.message}
               onChange={handleChange}
-              placeholder="What you want to say?"
+              placeholder="Enter your brief message.."
               className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
             />
           </label>

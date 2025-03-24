@@ -1,7 +1,6 @@
 import React from "react";
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
-
 import { styles } from "../styles";
 import { github } from "../assets";
 import { SectionWrapper } from "../hoc";
@@ -15,6 +14,7 @@ const ProjectCard = ({
   tags,
   image,
   source_code_link,
+  liveUrl
 }) => {
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
@@ -60,7 +60,18 @@ const ProjectCard = ({
             >
               #{tag.name}
             </p>
+            
           ))}
+           <div className="flex space-x-4">
+             <a
+               href={liveUrl}
+               target="_blank"
+               rel="noopener noreferrer"
+               className="flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+             >
+               Live Demo
+             </a>
+             </div>
         </div>
       </Tilt>
     </motion.div>

@@ -1,11 +1,14 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState, useCallback } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
-
 import CanvasLoader from "../Loader";
 
 const Computers = ({ isMobile }) => {
-  const computer = useGLTF("./desktop_pc/scene.gltf");
+  const computer = useGLTF("./desktop_pc/scene.gltf", true); // Enable draco compression
+
+  // Optimize rendering by reducing shadow map size
+  const shadowMapSize = isMobile ? 512 : 1024;
+
   return (
     <mesh>
       <hemisphereLight intensity={0.15} groundColor="black" />
@@ -13,15 +16,15 @@ const Computers = ({ isMobile }) => {
         position={[-20, 50, 10]}
         angle={0.12}
         penumbra={1}
-        intensity={1}
+        intensity={0.8} // Reduced intensity for better performance
         castShadow
-        shadow-mapSize={1024}
+        shadow-mapSize={shadowMapSize}
       />
-      <pointLight intensity={1} />
+      <pointLight intensity={0.8} position={[0, 0, -1]} /> {/* Adjusted position and intensity */}
       <primitive
         object={computer.scene}
-        scale={isMobile ? 0.7 : 0.75}
-        position={isMobile ? [0, -3, -2.2] : [0, -3.25, -1.5]}
+        scale={isMobile ? 0.5 : 0.65} // Reduced scale for better performance
+        position={isMobile ? [0, -2.5, -1.8] : [0, -3, -1.2]}
         rotation={[-0.01, -0.2, -0.1]}
       />
     </mesh>
@@ -30,36 +33,42 @@ const Computers = ({ isMobile }) => {
 
 const ComputerCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
+
+  const handleMediaQueryChange = useCallback((event) => {
+    setIsMobile(event.matches);
+  }, []);
+
   useEffect(() => {
-    // Add a listener for changes to the screen size
     const mediaQuery = window.matchMedia("(max-width: 500px)");
-    // Set the initial value of the `isMobile` state variable
     setIsMobile(mediaQuery.matches);
 
-    // Define a callback function to handle changes to the media query
-    const handleMediaQueryChange = (event) => {
-      setIsMobile(event.matches);
-    };
-    // Add the callback function as a listener for changes to the media query
     mediaQuery.addEventListener("change", handleMediaQueryChange);
-    // Remove the listener when the component is unmounted
+    
     return () => {
       mediaQuery.removeEventListener("change", handleMediaQueryChange);
     };
-  }, []);
+  }, [handleMediaQueryChange]);
+
   return (
     <Canvas
       frameloop="demand"
       shadows
-      dpr={[1, 2]}
-      camera={{ position: [20, 3, 5], fov: 25 }}
-      gl={{ preserveDrawingBuffer: true }}
+      dpr={[1, Math.min(2, window.devicePixelRatio)]} // Limit DPR for better performance
+      camera={{ position: [20, 3, 5], fov: isMobile ? 30 : 25 }}
+      gl={{ 
+        preserveDrawingBuffer: true,
+        powerPreference: "high-performance",
+        antialias: false, // Disable antialiasing for better performance
+      }}
+      style={{ height: "100vh" }}
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
           enableZoom={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
+          enableDamping={false} // Disable damping for better performance
+          rotateSpeed={0.5} // Reduce rotate speed
         />
         <Computers isMobile={isMobile} />
       </Suspense>
@@ -67,5 +76,8 @@ const ComputerCanvas = () => {
     </Canvas>
   );
 };
+
+// Clean up GLTF cache when component unmounts
+useGLTF.preload("./desktop_pc/scene.gltf");
 
 export default ComputerCanvas;

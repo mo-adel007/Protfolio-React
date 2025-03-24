@@ -29,7 +29,18 @@ import tesla from "./company/tesla.png";
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
 import tripguide from "./tripguide.png";
-
+import bootstrap from "./tech/bootstrap.png";
+import ubuntu from "./tech/ubuntu.png";
+import nginx from "./tech/nginx.png";
+import python from "./tech/Python.png";
+import postman from "./tech/postman.png";
+import mysql from "./tech/mysql.png";
+import express from "./tech/express.png";
+import firebase from "./tech/firebase.png";
+import realestate from "./realestate.png";
+import chatting from "./chatting.jpg";
+import sociolo from './sociolo.png'
+import agco from './agco.png'
 export {
   logo,
   backend,
@@ -59,4 +70,16 @@ export {
   carrent,
   jobit,
   tripguide,
+  bootstrap,
+  ubuntu,
+  nginx,
+  python,
+  postman,
+  mysql,
+  express,
+  firebase,
+  realestate,
+  chatting,
+  sociolo,
+  agco
 };
